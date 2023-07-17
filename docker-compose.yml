@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis
+    network_mode: "host"
+    ports:
+      - "6379:6379"
+  double:
+    image: my_precious
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - dramatiq_prom_port=9191
+    depends_on:
+      - redis
+    working_dir: /opt/spyke/ 
+    entrypoint: [ "dramatiq", "-p", "1", "-t", "2", "double", "-Q", "double"]
+
+  square:
+    image: my_precious
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    working_dir: /opt/spyke/ 
+    environment:
+      - dramatiq_prom_port=9192
+  
+    entrypoint: [ "dramatiq", "-p", "1", "-t", "2", "square", "-Q", "square"]

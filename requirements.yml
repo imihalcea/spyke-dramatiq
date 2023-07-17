@@ -1,0 +1,9 @@
+name: spyke-dramatiq
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9.7
+  - pip
+  - pip:
+    - -r requirements.txt
