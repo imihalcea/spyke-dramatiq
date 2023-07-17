@@ -8,11 +8,11 @@ This project is a proof of concept for a distributed pipeline. The pipeline is c
 
 The main benefits of this approach are:
 
-- We can easily scale the pipeline by adding more workers
-- We can easily update the pipeline by updating the docker image
-
+- we can easily scale the pipeline by adding more workers
+- we can easily update the pipeline by updating the docker image
 
 The pipeline chains the following dummy tasks:
+
     - double: receives a number and returns the double of it
     - square: receives a number and returns the square of it
 
@@ -49,12 +49,11 @@ def setup():
 The dockerfile is responsible for packaging the pipeline. It installs the dependencies and copy the source code to the image.
 **Note that we package all the pipeline code in a single docker image.**
 
-The docker-compose.yml defines the services and it not ment to be used in production. In production we use Kubernetes or AWS ECS to manage to achieve the same results but in a more robust and scalable way. 
+The docker-compose.yml defines the services and it not ment to be used in production. In production we use Kubernetes or AWS ECS to be robust and scalable.
 
-Each service defines it's own entrypoint. This is because we want to run the same image in different ways. For example, we can run the image as actor "double" or as actor "squares". In production we can run the image as actor "double" on a machine with CPU and as actor "square" on a machine with GPU. 
+Each service defines it's own entrypoint. This is because we want to run the same image for different actors. For example, in production we can run the image as actor "double" on a machine with CPU and as actor "square" on a machine with GPU.
 
 Also for production we may want to have a base image that contains the dependencies and the source code and then build the actor images on top of it. This way we can have a base image that is shared between all the actors and we can update it easily.
-
 
 ## How to play with
 
@@ -96,7 +95,7 @@ The expected output in this terminal is:
 9 doubled then squared is 324
 ```
 
-The expected output in the first terminal is:
+The expected output in the first terminal is (this is the output of the workers executed in different docker containers))):
 
 ```text
 spyke-dramatiq-double-1  | [2023-07-17 21:56:02,935] [PID 7] [Thread-5] [double] [INFO] the double of 9 is 18
