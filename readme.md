@@ -31,8 +31,8 @@ This is the entry point of the pipeline. It is a simple python script that setup
 
 ### plumbing.py
 
-Setups the broker, the results backend, how the tasks are serialized and deserialized.
-In this spyke we use redis as broker and backend. In real life we can use a more robust broker and backend like RabbitMQ or AWS SQS and Postgres. For message serialization we use JSON but pickle is also supported.
+Setups the broker, the results backend, and how the messages are serialized and deserialized.
+In this spyke we use redis as broker and backend. In real life we can use a more robust broker (RabbitMQ or AWS SQS) and backend like Postgres. For message serialization we use JSON but pickle is also supported.
 
 ```python
 def setup():
@@ -95,7 +95,7 @@ The expected output in this terminal is:
 9 doubled then squared is 324
 ```
 
-The expected output in the first terminal is (this is the output of the workers executed in different docker containers))):
+The expected output in the first terminal is (this is the output of the workers executed in different docker containers):
 
 ```text
 spyke-dramatiq-double-1  | [2023-07-17 21:56:02,935] [PID 7] [Thread-5] [double] [INFO] the double of 9 is 18
