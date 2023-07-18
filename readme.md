@@ -7,7 +7,8 @@ This project is a proof of concept for a distributed pipeline.
 **We want to demonstrate that we can package the pipeline as single docker image and run it in a distributed way.**
 
 The main benefits of this approach are:
-
+- we can choose to have distributet or monolithic but composable pipeline
+- we can easily maintain the pipeline
 - we can easily scale the pipeline by adding more workers
 - we can easily update the pipeline by updating the docker image
 
