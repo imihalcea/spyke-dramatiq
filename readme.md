@@ -2,7 +2,7 @@
 
 ## Motivation
 
-This project is a proof of concept for a distributed pipeline. The pipeline is composed of a set of tasks that are executed in a distributed way. The tasks are executed by a set of workers that are connected to a broker. The broker is responsible for distributing the tasks to the workers. The backend responsible for storing the results of the tasks.
+This project is a proof of concept for a distributed pipeline. 
 
 **We want to demonstrate that we can package the pipeline as single docker image and run it in a distributed way.**
 
@@ -16,7 +16,7 @@ The pipeline chains the following dummy tasks:
     - double: receives a number and returns the double of it
     - square: receives a number and returns the square of it
 
-In real life this are inference tasks and we want to execute them in a distributed way on different machines.
+In real life this are inference tasks and we want to execute them in a distributed way on different machines. For example, in production we can run the image as actor "double" on a machine with CPU and as actor "square" on a machine with GPU.
 
 ## Architecture
 
@@ -32,7 +32,7 @@ This is the entry point of the pipeline. It is a simple python script that setup
 ### plumbing.py
 
 Setups the broker, the results backend, and how the messages are serialized and deserialized.
-In this spyke we use redis as broker and backend. In real life we can use a more robust broker (RabbitMQ or AWS SQS) and backend like Postgres. For message serialization we use JSON but pickle is also supported.
+In this spyke we use redis as broker and backend. We can also use RabbitMQ or AWS SQS or Posgres. For message serialization we use JSON but pickle is also supported.
 
 ```python
 def setup():
@@ -51,7 +51,7 @@ The dockerfile is responsible for packaging the pipeline. It installs the depend
 
 The docker-compose.yml defines the services and it not ment to be used in production. In production we use Kubernetes or AWS ECS to be robust and scalable.
 
-Each service defines it's own entrypoint. This is because we want to run the same image for different actors. For example, in production we can run the image as actor "double" on a machine with CPU and as actor "square" on a machine with GPU.
+Each service defines it's own entrypoint. This is because we want to run the same image for different actors. 
 
 Also for production we may want to have a base image that contains the dependencies and the source code and then build the actor images on top of it. This way we can have a base image that is shared between all the actors and we can update it easily.
 
@@ -105,3 +105,10 @@ spyke-dramatiq-square-1  | [2023-07-17 21:56:03,683] [PID 7] [Thread-4] [square]
 spyke-dramatiq-square-1  | [2023-07-17 21:56:03,684] [PID 7] [Thread-5] [square] [INFO] The square of 18 is 324
 spyke-dramatiq-square-1  | [2023-07-17 21:56:03,702] [PID 7] [Thread-5] [square] [INFO] The square of 10 is 100
 ```
+
+## Resources
+
+- https://medium.com/dkatalis/awesome-background-task-processing-in-python-with-dramatiq-640733f2de2f
+- Dramatiq GitHub docs & examples
+  
+  
